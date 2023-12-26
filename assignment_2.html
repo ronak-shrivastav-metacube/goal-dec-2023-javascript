@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <title>Assignment 2</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .w-x {
+            max-width: 200px;
+            cursor: pointer;
+        }
+
+        .btn-post {
+            position: relative;
+            top: 31px;
+            left: -289px;
+        }
+
+        .change-opactiy-dull {
+            opacity: 0.5;
+        }
+        
+        .change-opactiy-main {
+            opacity: 1;
+        }
+
+        #main-img-op {
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="text-center display-4 mb-0">
+                        Image gallery example
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="button" id="main-img-op" class="rounded-0 btn btn-sm btn-dark btn-post">Darker</button>
+                    <div class="full_img">
+                        <img src="images/pic1.jpg" alt="pic 1" id="img-main">
+                    </div>
+                    <ul class="list-inline" id="img-list"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        var imgArry = ['pic1.jpg', 'pic2.jpg', 'pic3.jpg', 'pic4.jpg', 'pic5.jpg'];
+        var imgMain = document.getElementById('img-main');
+        var UL = document.getElementById('img-list');
+        var imgRoad = [];
+        imgArry.forEach(element => {
+            li = document.createElement('li');
+            li.classList.add('list-inline-item');
+            li.classList.add('w-x');
+            li.classList.add('mx-0');
+            img = document.createElement('img');
+            img.setAttribute('src', 'images/' + element);
+            img.setAttribute('alt', element);
+            img.classList.add('w-100');
+            img.addEventListener('click', (e) => {
+                src = e.target.src;
+                imgMain.src = src;
+            });
+            li.appendChild(img);
+            UL.appendChild(li);
+        });
+        var btn = document.querySelector('#main-img-op');
+        btn.addEventListener('click', () => {
+            if(imgMain.classList.contains('change-opactiy-dull')) {
+                btn.textContent = 'Darker';
+                imgMain.classList.remove('change-opactiy-dull');
+                imgMain.classList.add('change-opactiy-main');
+            } else {
+                btn.textContent = 'Lighter';
+                imgMain.classList.remove('change-opactiy-main');
+                imgMain.classList.add('change-opactiy-dull');
+            }
+        });
+    </script>
+</body>
+
+</html>

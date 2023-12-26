@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <title>Assignment 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <section class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-primary" id="start-button">Start Game</button>
+                        <button type="button" class="btn btn-sm btn-success" onclick="resetGame()">Reset Game</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="game-box" class="mt-5 p-3 border rounded-lg" style="display: none;">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="lead">Enter your guess number, You have only 10 chances.</h4>
+                        <ul class="list-group list-group-horizontal mb-3">
+                            <li class="list-group-item">1</li>
+                            <li class="list-group-item">2</li>
+                            <li class="list-group-item">3</li>
+                            <li class="list-group-item">4</li>
+                            <li class="list-group-item">5</li>
+                            <li class="list-group-item">6</li>
+                            <li class="list-group-item">7</li>
+                            <li class="list-group-item">8</li>
+                            <li class="list-group-item">9</li>
+                            <li class="list-group-item">10</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <p id="msg-box" class="text-danger"></p>
+                    </div>
+                </div>
+                <div class="row" id="input-box">
+                    <div class="col-12">
+                        <div class="input-group mb-3">
+                            <input type="number" id="input-number" class="form-control form-control-sm"
+                                placeholder="Enter number">
+                            <span class="input-group-text btn btn-sm btn-success" onclick="checkAnswer()"
+                                id="submit-btn">Submit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        var randNumber = Math.floor(Math.random() * 100) + 1;
+        var button = document.getElementById('start-button');
+        button.addEventListener('click', getStart);
+        var start = false;
+        var chance = 0;
+        function getStart() {
+            if (!start) {
+                start = true;
+                var gameBox = document.getElementById('game-box');
+                gameBox.style.display = 'block';
+                manageChanges(1);
+            }
+        }
+        function manageChanges(i) {
+            if (chance < 10) {
+                chance += i;
+                var li = document.querySelector('ul :nth-child(' + chance + ')');
+                li.classList.add('bg-primary');
+                li.classList.add('text-light');
+            } else {
+                chance = 0;
+                hideOfInput();
+            }
+        }
+        function checkAnswer() {
+            document.getElementById('msg-box').text = "";
+            var number = document.getElementById('input-number').value;
+            if (number == randNumber) {
+                document.getElementById('msg-box').innerHTML = "Congratulations! your guess is matche.";
+                hideOfInput();
+            } else if (number < randNumber) {
+                document.getElementById('msg-box').innerHTML = "Ooopss...your number is lesser.";
+            } else if (number > randNumber) {
+                document.getElementById('msg-box').innerHTML = "Ooopss...your number is bigger.";
+            }
+            manageChanges(1);
+            document.querySelector('input[id="input-number"]').value = "";
+        }
+        function resetGame() {
+            chance = 1;
+            for (const li of document.querySelectorAll("li")) {
+                li.classList.remove("bg-primary");
+                li.classList.remove("text-light");
+            }
+            var li = document.querySelector('ul :nth-child(' + chance + ')');
+            li.classList.add('bg-primary');
+            li.classList.add('text-light');
+            document.querySelector('input[id="input-number"]').value = "";
+            document.getElementById('msg-box').innerHTML = "";
+            document.getElementById('input-box').style.display = 'block';
+        }
+        function hideOfInput() {
+            document.querySelector('input[id="input-number"]').value = "";
+            document.getElementById('input-box').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
