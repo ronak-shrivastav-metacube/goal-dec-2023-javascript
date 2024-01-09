@@ -15,7 +15,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="btn-group">
+                    <p class="display-4 text-center"><u>Guess The Number Game</u></p>
+                    <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
+                    <p class="text-center">Click on <kbd class="bg-primary">Start Game</kbd> button for play game.</p>
+                    <hr/>
+                    <div class="btn-group mt-5">
                         <button type="button" class="btn btn-sm btn-primary" id="start-button">Start Game</button>
                         <button type="button" class="btn btn-sm btn-success" onclick="resetGame()">Reset Game</button>
                     </div>
@@ -25,7 +29,7 @@
             <div id="game-box" class="mt-5 p-3 border rounded-lg" style="display: none;">
                 <div class="row">
                     <div class="col-12">
-                        <h4 class="lead">Enter your guess number, You have only 10 chances.</h4>
+                        <h4 class="lead">Enter your guess number between 01-100, You have only 10 chances.</h4>
                         <ul class="list-group list-group-horizontal mb-3">
                             <li class="list-group-item">1</li>
                             <li class="list-group-item">2</li>
@@ -79,6 +83,7 @@
                 li.classList.add('bg-primary');
                 li.classList.add('text-light');
             } else {
+                document.getElementById('msg-box').innerHTML = "<p class='bg-danger p-2 text-light'>Oopss..You miss the guess. The number is "+randNumber+". Game Over.</p>";
                 chance = 0;
                 hideOfInput();
             }
@@ -86,13 +91,17 @@
         function checkAnswer() {
             document.getElementById('msg-box').text = "";
             var number = document.getElementById('input-number').value;
+            if(number == '') {
+                document.getElementById('msg-box').innerHTML = 'Please enter value';
+                return false;
+            }
             if (number == randNumber) {
-                document.getElementById('msg-box').innerHTML = "Congratulations! your guess is matche.";
+                document.getElementById('msg-box').innerHTML = "Congratulations! You got it right!";
                 hideOfInput();
             } else if (number < randNumber) {
-                document.getElementById('msg-box').innerHTML = "Ooopss...your number is lesser.";
+                document.getElementById('msg-box').innerHTML = "Ooopss...Your last guess was too low!.";
             } else if (number > randNumber) {
-                document.getElementById('msg-box').innerHTML = "Ooopss...your number is bigger.";
+                document.getElementById('msg-box').innerHTML = "Ooopss...your last guess was too high!";
             }
             manageChanges(1);
             document.querySelector('input[id="input-number"]').value = "";
